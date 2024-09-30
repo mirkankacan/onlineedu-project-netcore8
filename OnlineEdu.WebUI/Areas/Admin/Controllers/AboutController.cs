@@ -39,10 +39,11 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
             var values = await _httpClient.GetFromJsonAsync<UpdateAboutDto>($"abouts/{id}");
             return View(values);
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
         {
-            await _httpClient.PutAsJsonAsync<UpdateAboutDto>("abouts", updateAboutDto);
+            await _httpClient.PutAsJsonAsync("abouts", updateAboutDto);
             return RedirectToAction(nameof(Index));
         }
     }
