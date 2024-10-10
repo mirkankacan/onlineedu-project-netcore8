@@ -8,12 +8,12 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CoursesController(IGenericService<Course> _courseService, IMapper _mapper) : ControllerBase
+    public class CoursesController(ICourseService _courseService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            var values = await _courseService.TGetListAsync();
+            var values = await _courseService.TGetCoursesWithCategories();
             return Ok(values);
         }
 
@@ -45,6 +45,34 @@ namespace OnlineEdu.API.Controllers
             var value = _mapper.Map<Course>(updateCourseDto);
             await _courseService.TUpdateAsync(value);
             return Ok("Course record updated");
+        }
+        [HttpGet("ShowOnHome/{id}")]
+        public async Task<IActionResult> ShowOnHome(int id)
+        {
+            try
+            {
+                await _courseService.TShowOnHome(id);
+                return Ok();
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
+        [HttpGet("HideOnHome/{id}")]
+        public async Task<IActionResult> HideOnHome(int id)
+        {
+            try
+            {
+                await _courseService.THideOnHome(id);
+                return Ok();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

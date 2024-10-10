@@ -8,12 +8,12 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController(IGenericService<Blog> _blogService, IMapper _mapper) : ControllerBase
+    public class BlogsController(IMapper _mapper, IBlogService _blogService) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            var values = await _blogService.TGetListAsync();
+            var values = await _blogService.TGetBlogsWithCategories();
             return Ok(values);
         }
 
