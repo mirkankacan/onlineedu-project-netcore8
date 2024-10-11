@@ -59,7 +59,6 @@ namespace OnlineEdu.API.Controllers
             {
                 throw;
             }
-
         }
 
         [HttpGet("HideOnHome/{id}")]
@@ -69,6 +68,20 @@ namespace OnlineEdu.API.Controllers
             {
                 await _courseCategoryService.THideOnHome(id);
                 return Ok();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetActiveCategories")]
+        public async Task<IActionResult> GetActiveCategories()
+        {
+            try
+            {
+                var values = await _courseCategoryService.TGetFilteredListAsync(x => x.IsShown == true);
+                return Ok(values);
             }
             catch
             {

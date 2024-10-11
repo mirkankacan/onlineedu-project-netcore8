@@ -46,6 +46,7 @@ namespace OnlineEdu.API.Controllers
             await _courseService.TUpdateAsync(value);
             return Ok("Course record updated");
         }
+
         [HttpGet("ShowOnHome/{id}")]
         public async Task<IActionResult> ShowOnHome(int id)
         {
@@ -58,7 +59,6 @@ namespace OnlineEdu.API.Controllers
             {
                 throw;
             }
-
         }
 
         [HttpGet("HideOnHome/{id}")]
@@ -68,6 +68,20 @@ namespace OnlineEdu.API.Controllers
             {
                 await _courseService.THideOnHome(id);
                 return Ok();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("GetActiveCourses")]
+        public async Task<IActionResult> GetActiveCourses()
+        {
+            try
+            {
+                var values = await _courseService.TGetFilteredListAsync(x => x.IsShown == true);
+                return Ok(values);
             }
             catch
             {
